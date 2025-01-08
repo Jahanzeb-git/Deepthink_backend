@@ -8,11 +8,21 @@ from passlib.context import CryptContext
 import sqlite3
 import spacy
 from huggingface_hub import InferenceClient
+from fastapi.middleware.cors import CORSMiddleware
 
 # Load spaCy model for NLP processing
 nlp = spacy.load("en_core_web_sm")
 
 app = FastAPI()
+
+# Add CORS middleware
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # List of allowed origin, Currently set to all origins (Not recommended for Production)
+    allow_credentials=True,  # Allow sending cookies and credentials
+    allow_methods=["*"],  # Allow all HTTP methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allow all headers (e.g., Authorization)
+)
 
 HUGGINGFACE_API_KEY = "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"
 HUGGINGFACE_MODEL = "Qwen/Qwen2.5-Coder-32B-Instruct"
